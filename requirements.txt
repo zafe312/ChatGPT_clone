@@ -1,0 +1,7 @@
+flask 
+openai
+requests 
+textblob 
+langchain 
+python-dotenv
+groq
