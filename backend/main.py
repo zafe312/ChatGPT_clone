@@ -6,6 +6,7 @@ from flask import Flask, request, jsonify, Response, stream_with_context
 from jose import jwt, JWTError
 from flask_cors import CORS
 from groq import Groq
+from jwt_utils import verify_token
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -17,19 +18,6 @@ client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 
 app = Flask(__name__)
 CORS(app)  # Allow requests from Next.js frontend
-
-def verify_token(token):
-    try:
-        payload = jwt.decode(
-            token,
-            SUPABASE_JWT_SECRET,
-            algorithms=["HS256"],
-            options={"verify_aud": False}  # 🔥 Ignore audience validation
-        )
-        return payload
-    except JWTError as e:
-        print("Token decode error:", e)
-        return None
 
 @app.route("/protected", methods=["GET"])
 def protected():

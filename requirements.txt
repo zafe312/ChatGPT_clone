@@ -5,3 +5,4 @@ python-dotenv
 groq
 python-jose
 flask-cors
+supabase
